@@ -1,13 +1,27 @@
-# Nerve Media Suite (Alenia Apps)
+<div align="center">
+
+<img src="assets/logo.png" alt="Zenith Nerve Tools Logo" width="600">
+
+# Zenith Nerve Tools (Alenia Apps)
+
+**¡Bienvenido al monorepo oficial de Zenith Nerve Tools de Alenia Studios! Este repositorio alberga nuestras potentes y ligeras herramientas de edición y procesamiento de medios interactivos.**
 
 *Leer en otros idiomas: [🇬🇧 English](README.md) | [🇪🇸 Español](README.es.md)*
 
-[![GitHub Release](https://img.shields.io/github/v/release/Kaia-Alenia/nerve-media-suite?style=for-the-badge&color=00FFFF)](https://github.com/Kaia-Alenia/nerve-media-suite/releases)
-[![Build Status](https://img.shields.io/github/actions/workflow/status/Kaia-Alenia/nerve-media-suite/build.yml?style=for-the-badge&color=39FF14)](https://github.com/Kaia-Alenia/nerve-media-suite/actions)
-[![Downloads](https://img.shields.io/github/downloads/Kaia-Alenia/nerve-media-suite/total?style=for-the-badge&color=FF00FF)](https://github.com/Kaia-Alenia/nerve-media-suite/releases)
-[![License: GPL v3](https://img.shields.io/badge/License-GPL_v3-FFFF00.svg?style=for-the-badge)](https://www.gnu.org/licenses/gpl-3.0)
+[![Build Status](https://github.com/Kaia-Alenia/zenith-nerve-tools/actions/workflows/build.yml/badge.svg)](https://github.com/Kaia-Alenia/zenith-nerve-tools/actions)
+[![GitHub Release](https://img.shields.io/github/v/release/Kaia-Alenia/zenith-nerve-tools?color=blue)](https://github.com/Kaia-Alenia/zenith-nerve-tools/releases)
+[![Downloads](https://img.shields.io/github/downloads/Kaia-Alenia/zenith-nerve-tools/total?color=blue)](https://github.com/Kaia-Alenia/zenith-nerve-tools/releases)
+[![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
+[![Python](https://img.shields.io/badge/Python-3-3776AB?logo=python&logoColor=white)](https://www.python.org/)
 
-¡Bienvenido al monorepo oficial de **Nerve Media Suite** de Alenia Studios! Este repositorio alberga nuestras potentes y ligeras herramientas de edición y procesamiento de medios interactivos. 
+[![Patreon](https://img.shields.io/badge/Patreon-alenia__studios-F96854?logo=patreon&logoColor=white)](https://www.patreon.com/alenia_studios)
+[![Ko-Fi](https://img.shields.io/badge/Ko--Fi-alenia__studios-F16061?logo=ko-fi&logoColor=white)](https://ko-fi.com/alenia_studios)
+[![PayPal](https://img.shields.io/badge/PayPal-Donate-00457C?logo=paypal&logoColor=white)](https://www.paypal.com/ncp/payment/TCCYMCFSVMV8E)
+[![Itch.io](https://img.shields.io/badge/Itch.io-Alenia_Studios-FA5C5C?logo=itch.io&logoColor=white)](https://alenia-studios.itch.io/)
+
+<br/>
+
+</div>
 
 La arquitectura de este repositorio ha sido estructurada siguiendo las directrices modernas de empaquetado de Python (PyPA) en modo **Monorepo**, donde las aplicaciones nativas conviven e interactúan gracias a un núcleo compartido (`alenia_bridge`).
 
@@ -41,14 +55,7 @@ Nuestra suite está compuesta por herramientas minimalistas y de alto rendimient
 
 ## Nerve: El puente de Intercomunicación
 
-```text
-    .--. .--.
-   /    \    \
-  |  .--. .-- |
-  | (    \    )
-   \ `---'`--'
-    `--'
-```
+
 
 La verdadera magia detrás de la suite de Alenia es **Nerve**, un protocolo de comunicación entre procesos (IPC) que vive en el corazón de nuestra librería local `alenia-bridge`. 
 
