@@ -1,6 +1,7 @@
 from PIL import Image
 Image.MAX_IMAGE_PIXELS = None
 Image.init()
+
 import sys, os
 from alenia_bridge.integration import init_zenith, NerveBridge
 init_zenith(__file__)

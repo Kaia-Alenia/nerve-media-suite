@@ -1,8 +1,8 @@
-
+import sys, os
 
 from PIL import Image
 Image.init()
-import sys, os
+
 from alenia_bridge.integration import init_zenith, NerveBridge
 init_zenith(__file__)
 
@@ -390,13 +390,8 @@ class AleniaGiftly(ctk.CTk, TkinterDnD.DnDWrapper if DND_AVAILABLE else object):
             Image.MAX_IMAGE_PIXELS = None
             processed = 0
             
-            out_dir = os.path.join(self.path, "Preview")
-            os.makedirs(out_dir, exist_ok=True)
-            
             for f_idx, f_path in enumerate(files):
                 try:
-                    with open(f_path, 'rb') as debug_f:
-                        print(f"DEBUG {f_path} header: {debug_f.read(8)}")
                     img = Image.open(f_path)
                     img.load()
                 except Exception as e:
@@ -418,6 +413,23 @@ class AleniaGiftly(ctk.CTk, TkinterDnD.DnDWrapper if DND_AVAILABLE else object):
 
                 if not frames:
                     continue
+
+                if not bg_color or bg_color.upper() == "NONE":
+                    global_bbox = None
+                    for f in frames:
+                        alpha = f.split()[3] if len(f.split()) == 4 else None
+                        if alpha:
+                            bbox = alpha.getbbox()
+                            if bbox:
+                                if global_bbox is None:
+                                    global_bbox = list(bbox)
+                                else:
+                                    global_bbox[0] = min(global_bbox[0], bbox[0])
+                                    global_bbox[1] = min(global_bbox[1], bbox[1])
+                                    global_bbox[2] = max(global_bbox[2], bbox[2])
+                                    global_bbox[3] = max(global_bbox[3], bbox[3])
+                    if global_bbox:
+                        frames = [f.crop(global_bbox) for f in frames]
 
                 processed = []
                 total_frames = len(frames)
@@ -452,7 +464,7 @@ class AleniaGiftly(ctk.CTk, TkinterDnD.DnDWrapper if DND_AVAILABLE else object):
 
                 if processed:
                     base_dir = os.path.dirname(f_path)
-                    out_dir = os.path.join(base_dir, "Individual_Gifs")
+                    out_dir = os.path.join(base_dir, "Output")
                     os.makedirs(out_dir, exist_ok=True)
                     out_name = f"{os.path.splitext(os.path.basename(f_path))[0]}.gif"
                     output_path = os.path.join(out_dir, out_name)

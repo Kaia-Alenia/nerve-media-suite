@@ -32,7 +32,7 @@ The architecture of this repository follows modern Python Packaging (PyPA) guide
 
 The magic of our ecosystem is powered by two robust, open-source libraries we developed. Feel free to explore and use them:
 
-- **[Alenia Zenith](https://github.com/Kaia-Alenia/alenia-zenith)**: The visual foundation. Handles beautiful, high-performance UI rendering and graphical integrations.
+- **[Alenia Zenith](https://github.com/Kaia-Alenia/alenia-zenith)**: The application accelerator. Acts as a bootstrapper that drastically reduces load times, ensuring Python apps launch almost instantly.
 - **[Alenia Nerve](https://github.com/Kaia-Alenia/alenia-nerve)**: The brain of our IPC (Inter-Process Communication). Enables real-time, low-latency socket communication between standalone tools.
 
 ---
@@ -42,34 +42,75 @@ The magic of our ecosystem is powered by two robust, open-source libraries we de
 Our suite consists of minimalist, high-performance tools developed in Python and natively compiled.
 
 ### 1. Framegrid (FG.SLICER)
+<p>
+  <a href="https://github.com/Kaia-Alenia/zenith-nerve-tools/releases/latest/download/framegrid-Windows.zip"><img src="https://img.shields.io/badge/Windows-0078D6?style=for-the-badge&logo=windows&logoColor=white" alt="Windows Download"/></a>
+  <a href="https://github.com/Kaia-Alenia/zenith-nerve-tools/releases/latest/download/framegrid-macOS.zip"><img src="https://img.shields.io/badge/macOS-000000?style=for-the-badge&logo=apple&logoColor=white" alt="macOS Download"/></a>
+  <a href="https://github.com/Kaia-Alenia/zenith-nerve-tools/releases/latest/download/framegrid-Linux.tar.gz"><img src="https://img.shields.io/badge/Linux-FCC624?style=for-the-badge&logo=linux&logoColor=black" alt="Linux Download"/></a>
+</p>
+
 **Framegrid** is a precision spritesheet slicer. It is specifically designed to take large texture sheets (spritesheets) from video games or animations and extract each "frame" automatically.
 - **What it does**: Reads individual images or entire directories and mathematically slices them based on a custom Width and Height block.
 - **Use cases**: Separating the frames of a walking character (e.g., slicing a 256x256 spritesheet into sixteen 64x64 images).
 - **Efficiency**: Processes multiple images using precise calculations without quality loss.
 
 ### 2. Giftly
+<p>
+  <a href="https://github.com/Kaia-Alenia/zenith-nerve-tools/releases/latest/download/giftly-Windows.zip"><img src="https://img.shields.io/badge/Windows-0078D6?style=for-the-badge&logo=windows&logoColor=white" alt="Windows Download"/></a>
+  <a href="https://github.com/Kaia-Alenia/zenith-nerve-tools/releases/latest/download/giftly-macOS.zip"><img src="https://img.shields.io/badge/macOS-000000?style=for-the-badge&logo=apple&logoColor=white" alt="macOS Download"/></a>
+  <a href="https://github.com/Kaia-Alenia/zenith-nerve-tools/releases/latest/download/giftly-Linux.tar.gz"><img src="https://img.shields.io/badge/Linux-FCC624?style=for-the-badge&logo=linux&logoColor=black" alt="Linux Download"/></a>
+</p>
+
 **Giftly** is an animation assembly engine. It takes individual frames (or an instantly sliced spritesheet) and converts them into fluid, optimized `.gif` files.
 - **What it does**: Generates and previews animations, providing full control over artistic parameters such as Frames Per Second (FPS), Scale factor (for pixel art), and Background Color (supports alpha masks and true transparency).
 - **Features**: Can process files in batches, and resizes frames (using ideal `NEAREST` sampling for pixel-art) to export flawless visuals.
 
 ---
 
-## Nerve: The Intercommunication Bridge
+## Zenith & Nerve: The Core Ecosystem
 
+The true magic behind the Alenia suite is the seamless integration of our two foundational libraries: **Zenith** for the interface and **Nerve** for inter-process communication (IPC) via `alenia-bridge`.
 
+### Zenith: Lightning-Fast Application Bootstrapping
+Python applications are traditionally slow to start, but both **Framegrid** and **Giftly** are powered by **Alenia Zenith** under the hood. Zenith acts as a specialized bootstrapper and accelerator (`zenith.ignite()`) that optimizes load times, allowing our tools to launch almost instantly. It bypasses common Python cold-start delays, providing a snappy, compiled-like native experience right from the start.
 
-The true magic behind the Alenia suite is **Nerve**, an Inter-Process Communication (IPC) protocol living at the core of our local `alenia-bridge` library.
+#### How Zenith Works
 
-### How does Nerve work?
+```text
+              [Application Entrypoint]
+                         │
+               ( zenith.ignite() )
+                         │
+         ┌───────────────┴──────────────────┐
+         ▼                                  ▼
+[sys.meta_path Hook]              [ThreadPoolExecutor]
+ ZenithLazyFinder                  workers=4 (default)
+ Returns proxy module              Pre-loads cached modules
+ on first import                   with GIL bypass per thread
+         │                                  │
+         ▼                                  ▼
+[First attribute access]          [Module ready in sys.modules]
+ _zenith_load_module() called      Main thread gets real module
+ Loads real module on demand       instantly on access
+```
+
+1. **Lazy Import Hook**: `ZenithLazyFinder` is inserted at index 0 of `sys.meta_path`. Every new import statement returns a lightweight `ZenithLazyModule` proxy instead of executing the module immediately. The real module is only loaded the first time one of its attributes is accessed.
+2. **Speculative Pre-loader**: A `ThreadPoolExecutor` (4 workers by default) pre-loads modules from the persistent cache in background threads. A thread-local bypass flag prevents background threads from creating further lazy proxies, ensuring they load real modules.
+3. **Persistent Cache**: On exit, Zenith writes `.zenith_cache.json` with the list of modules used during the session. On the next launch, those modules are queued for background pre-loading before user code runs.
+
+### Nerve: The Intercommunication Bridge
 In traditional software ecosystems, tools are isolated. Nerve breaks that barrier by creating a local network architecture that connects all our applications simultaneously.
-1. **NexusHub**: When you toggle "Nerve" in any suite tool, it spins up (or connects to) an underlying socket coordinator. It uses **local TCP/IP (Port 50505)** on Windows or a blazing fast **UNIX Socket (`/tmp/nerve.sock`)** on Linux/macOS.
+
+1. **NexusHub (The Main Hub)**: The Hub acts as the central router for all messages. You have two ways to start it:
+   - **Standalone Hub**: If you have `alenia-bridge` installed, you can simply run `nerve start` in your terminal. This will spin up a dedicated, independent Hub in the background.
+   - **Auto-Host via UI**: If no Hub is running, toggling the "Nerve" switch inside any Zenith-powered app (like Framegrid or Giftly) will automatically host the Hub within that app. 
+   It uses **local TCP/IP (Port 50505)** on Windows or a blazing fast **UNIX Socket (`/tmp/nerve.sock`)** on Linux/macOS.
 2. **NexusClient**: Each opened application acts as a client to the Nexus, sending and receiving events in real time.
 
-### The Connected Workflow
-When using the ecosystem and toggling the **Nerve Switch** in the UI:
+### The Connected Workflow in Action
+When using the ecosystem with the **Nerve Switch** enabled in both apps:
 - Suppose you just exported hundreds of visual frames in **Framegrid**.
-- Once finished, **Framegrid** sends a message (`batch_ready`) over the Nerve channel containing the dimensions and the path of the extracted files.
-- **Giftly**, which is open in the background, receives the event in real time via `alenia_bridge`, automatically loads the paths into its interface without the user opening a file explorer, and calibrates the dimensions (X/Y) so it is instantly ready to assemble the animations.
+- Once finished, **Framegrid** automatically broadcasts a message (`batch_ready`) over the Nerve channel containing the dimensions and the directory path of the extracted files.
+- **Giftly**, running in the background and connected to the same Nerve Hub, receives this event in real time. Its Zenith UI instantly updates to load the new paths and calibrates the dimensions (X/Y) without you ever needing to open a file explorer.
 
 The entire creation process becomes a frictionless ecosystem, completely removing the need to manually drag and drop files.
 

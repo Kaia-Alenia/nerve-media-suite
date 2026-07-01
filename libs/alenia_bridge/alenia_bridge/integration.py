@@ -8,7 +8,11 @@ import os
 def init_zenith(file_path):
     try:
         import zenith
-        zenith.ignite(file=file_path, show_banner=False)
+        zenith.ignite(
+            file=file_path, 
+            show_banner=False, 
+            exclude=["PIL", "nerve", "customtkinter", "tkinter", "_tkinter", "alenia_bridge"]
+        )
     except ImportError:
         pass
     except Exception:
