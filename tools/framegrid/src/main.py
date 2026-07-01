@@ -42,8 +42,8 @@ class AleniaFrameGrid(ctk.CTk, TkinterDnD.DnDWrapper if DND_AVAILABLE else objec
 
         ctk.set_appearance_mode("dark")
         self.title(f"Framegrid {CURRENT_VERSION}")
-        self.geometry("580x52")
-        self.resizable(False, False)
+        self.geometry("750x65")
+        self.resizable(True, False)
         self.attributes("-topmost", True)
         self.configure(fg_color="#0A0A0A")
         
@@ -75,7 +75,7 @@ class AleniaFrameGrid(ctk.CTk, TkinterDnD.DnDWrapper if DND_AVAILABLE else objec
             text_color="#444444",
             width=100
         )
-        self.path_label.pack(side="left", padx=5)
+        self.path_label.pack(side="left", padx=5, fill="x", expand=True)
         self.path_label.bind("<Button-1>", lambda e: self.manual_select())
 
         self.mode_switch = ctk.CTkSegmentedButton(

@@ -47,8 +47,8 @@ class AleniaGiftly(ctk.CTk, TkinterDnD.DnDWrapper if DND_AVAILABLE else object):
 
         ctk.set_appearance_mode("dark")
         self.title(f"Giftly {CURRENT_VERSION}")
-        self.geometry("640x160")
-        self.resizable(False, False)
+        self.geometry("750x180")
+        self.resizable(True, False)
         self.configure(fg_color="#0A0A0A")
 
         self.mode = "manual"
