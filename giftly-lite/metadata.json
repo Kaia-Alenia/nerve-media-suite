@@ -1,0 +1,8 @@
+{
+  "name": "Giftly Lite",
+  "version": "1.4.0",
+  "author": "Alenia Studios",
+  "description": "High-performance batch spritesheet to GIF converter for GameDev.",
+  "engine": "Alenia Zenith Speculative Engine",
+  "license": "GNU General Public License v3 (GPL v3)"
+}

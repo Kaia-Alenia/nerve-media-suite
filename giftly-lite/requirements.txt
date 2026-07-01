@@ -1,0 +1,5 @@
+Pillow>=9.0.0
+customtkinter>=5.0.0
+tkinterdnd2>=0.3.0
+alenia-zenith>=1.0.0
+alenia-nerve>=1.0.0
