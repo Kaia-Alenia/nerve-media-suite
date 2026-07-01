@@ -34,7 +34,7 @@ def resource_path(relative_path):
     base_path = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
     return os.path.join(base_path, relative_path)
 
-class AleniaGiftlyLite(ctk.CTk, TkinterDnD.DnDWrapper if DND_AVAILABLE else object):
+class AleniaGiftly(ctk.CTk, TkinterDnD.DnDWrapper if DND_AVAILABLE else object):
     def __init__(self):
         ctk.CTk.__init__(self)
         self.dnd_active = False
@@ -46,7 +46,7 @@ class AleniaGiftlyLite(ctk.CTk, TkinterDnD.DnDWrapper if DND_AVAILABLE else obje
                 pass
 
         ctk.set_appearance_mode("dark")
-        self.title(f"Giftly Lite {CURRENT_VERSION}")
+        self.title(f"Giftly {CURRENT_VERSION}")
         self.geometry("640x160")
         self.resizable(False, False)
         self.configure(fg_color="#0A0A0A")
@@ -71,7 +71,7 @@ class AleniaGiftlyLite(ctk.CTk, TkinterDnD.DnDWrapper if DND_AVAILABLE else obje
 
         self.brand_label = ctk.CTkLabel(
             top_row, 
-            text="GIFTLY.LITE", 
+            text="GIFTLY", 
             font=ctk.CTkFont(family="Courier", size=10, weight="bold"),
             text_color="#444444"
         )
@@ -480,5 +480,5 @@ class AleniaGiftlyLite(ctk.CTk, TkinterDnD.DnDWrapper if DND_AVAILABLE else obje
             self.after(0, lambda: self.update_status("ready"))
 
 if __name__ == "__main__":
-    app = AleniaGiftlyLite()
+    app = AleniaGiftly()
     app.mainloop()

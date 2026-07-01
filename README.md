@@ -32,8 +32,8 @@ Our suite consists of minimalist, high-performance tools developed in Python and
 - **Use cases**: Separating the frames of a walking character (e.g., slicing a 256x256 spritesheet into sixteen 64x64 images).
 - **Efficiency**: Processes multiple images using precise calculations without quality loss.
 
-### 2. Giftly Lite
-**Giftly Lite** is an animation assembly engine. It takes individual frames (or an instantly sliced spritesheet) and converts them into fluid, optimized `.gif` files.
+### 2. Giftly
+**Giftly** is an animation assembly engine. It takes individual frames (or an instantly sliced spritesheet) and converts them into fluid, optimized `.gif` files.
 - **What it does**: Generates and previews animations, providing full control over artistic parameters such as Frames Per Second (FPS), Scale factor (for pixel art), and Background Color (supports alpha masks and true transparency).
 - **Features**: Can process files in batches, and resizes frames (using ideal `NEAREST` sampling for pixel-art) to export flawless visuals.
 

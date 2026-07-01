@@ -32,8 +32,8 @@ Nuestra suite está compuesta por herramientas minimalistas y de alto rendimient
 - **Casos de uso**: Separar los cuadros de un personaje caminando (e.g. un spritesheet de 256x256 en 16 imágenes de 64x64).
 - **Eficiencia**: Procesa múltiples imágenes usando cálculos precisos sin pérdida de calidad.
 
-### 2. Giftly Lite
-**Giftly Lite** es un motor de ensamblaje de animaciones. Toma fotogramas individuales (o un spritesheet que corta en el momento) y los convierte en archivos `.gif` fluidos y optimizados.
+### 2. Giftly
+**Giftly** es un motor de ensamblaje de animaciones. Toma fotogramas individuales (o un spritesheet que corta en el momento) y los convierte en archivos `.gif` fluidos y optimizados.
 - **¿Qué hace?** Genera y previsualiza animaciones proporcionando un control total sobre parámetros artísticos como Fotogramas por Segundo (FPS), factor de Escala (para pixel art) y el Color de Fondo (soporta máscaras alfa y transparencias verdaderas).
 - **Características**: Puede procesar archivos en lote, y redimensiona (mediante un muestreo `NEAREST` ideal para pixel-art) los cuadros para exportar visuales impecables.
 
